@@ -1,3 +1,11 @@
+.home{
+    background: linear-gradient(65deg, #131111, #4b4b4b);
+}
+
+.filter{
+    background:#3f3e3e !important;
+    color: white !important;
+}
 ::-webkit-scrollbar {
     width: 4px;
 }

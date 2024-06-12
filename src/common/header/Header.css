@@ -1,6 +1,8 @@
 .app-header {
+    display: flex;
+    justify-content: space-between;
     background-color: #222;
-    height: 36px;
+    height: 40px;
     padding: 8px 32px 8px 16px;
 }
 
@@ -8,10 +10,20 @@
     float: right;
 }
 
+.logo{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #ff7f7f;
+}
+
+
 .app-logo {
     animation: app-logo-spin infinite 8s linear;
-    height: 35px;
+    height: 37px;
     background: #ff7f7f;
+    padding: 5px;
+    margin-right: 10px;
 }
 
 .bookshow-button {
@@ -37,4 +49,29 @@
 
 .red {
     color: red;
+}
+
+.bookshow{
+    background-color: #ff7f7f !important;
+}
+
+
+.form-input{
+    display: flex;
+    flex-direction: column ;
+    padding: 5px 20px ;
+    gap: 20px;
+}
+.form-input-register{
+    display: flex;
+    flex-direction: column ;
+    padding: 5px 20px ;
+    gap: 12px;
+}
+
+
+@media (max-width: 460px) {
+.logo span {
+display: none;
+}
 }

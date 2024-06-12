@@ -48,3 +48,79 @@
 .message {
   margin: 4px 0px 0px 16px
 }
+
+.confirmation-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-family: 'Arial, sans-serif';
+  background-color: #f7f7f7;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-poster {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.middle-section {
+  flex: 2;
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-card, .pricing-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.details-card h2, .pricing-card h3 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.show-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #555;
+  font-size: 16px;
+}
+
+.show-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  color: #ff7f7f;
+}
+
+.qr-code {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

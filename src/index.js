@@ -1,10 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import './common/common.css';
+import 'tailwindcss/tailwind.css';
 import 'typeface-roboto';
-import registerServiceWorker from './registerServiceWorker';
 import Controller from './screens/Controller';
+import ReactDOM from 'react-dom/client';
+import 'tailwindcss/tailwind.css';
 
-ReactDOM.render(<Controller />, document.getElementById('root'));
-registerServiceWorker();
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Controller />);

@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-  text-decoration: none;
+.main-container{
+    overflow-x: hidden;
 }
