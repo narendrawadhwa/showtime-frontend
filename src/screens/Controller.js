@@ -21,19 +21,19 @@ const Controller = () => {
             <div className="main-container">
                 <Routes>
                     <Route 
-                        path="/"   
+                        path="https://showtime-frontend-vltk.onrender.com/"   
                         element={<Home baseUrl={baseUrl} />} 
                     />
                     <Route 
-                        path="/movie/:id" 
+                        path="https://showtime-frontend-vltk.onrender.com/movie/:id" 
                         element={<Details onSelectMovie={handleSelectMovie} baseUrl={baseUrl} />} 
                     />
                     <Route
-                        path="/bookshow/:id"
+                        path="https://showtime-frontend-vltk.onrender.com/bookshow/:id"
                         element={<BookShow selectedMovieId={selectedMovieId} baseUrl={baseUrl} />} 
                     />
                     <Route
-                        path="/confirm/:id"
+                        path="https://showtime-frontend-vltk.onrender.com/confirm/:id"
                         element={<Confirmation baseUrl={baseUrl} />}
                     />
                 </Routes>

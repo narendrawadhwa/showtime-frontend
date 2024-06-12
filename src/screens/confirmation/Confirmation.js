@@ -1,91 +1,10 @@
-// import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import Header from '../../common/header/Header';
-// import axios from 'axios';
-// import { FaMapMarkerAlt, FaClock, FaTheaterMasks } from 'react-icons/fa'; 
-// import { IoTicket, IoPricetags, IoLanguage } from "react-icons/io5";
-// import QRCode from 'qrcode.react'; // QR Code library
-
-// import './Confirmation.css';
-
-// const ConfirmationPage = ({ baseUrl }) => {
-//     const location = useLocation();
-//     const [movieDetails, setMovieDetails] = useState(null);
-//     const [showDetails, setShowDetails] = useState(null);
-
-//     useEffect(() => {
-//         const fetchMovieDetails = async () => {
-//             try {
-//                 const response = await axios.get(`${baseUrl}movies/${location.state.movieId}`);
-//                 setMovieDetails(response.data);
-//             } catch (error) {
-//                 console.error('Error fetching movie details:', error);
-//             }
-//         };
-
-//         fetchMovieDetails();
-//     }, [location.state.movieId]);
-
-//     useEffect(() => {
-//         if (movieDetails) {
-//             const selectedShow = movieDetails.shows.find(show => show.id === location.state.showId);
-//             setShowDetails(selectedShow);
-//         }
-//     }, [movieDetails, location.state.showId]);
-
-//     return (
-//         <React.Fragment>
-//             <Header />
-//             <div className="confirmation-page">
-//                 <div className="left-section">
-//                     {movieDetails && <img src={movieDetails.poster_url} alt="Movie Poster" className="movie-poster" />}
-//                 </div>
-//                 <div className="middle-section">
-//                     {movieDetails && showDetails && (
-//                         <div className="details-card">
-//                             <h2>{movieDetails.title}</h2>
-//                             <div className="show-details">
-//                                 <span className="show-detail"><FaTheaterMasks className="icon" /> {showDetails.theatre.name}</span>
-//                                 <span className="show-detail"><FaMapMarkerAlt className="icon"/> {showDetails.theatre.city}</span>
-//                                 <span className="show-detail"><FaClock className="icon"/> {showDetails.show_timing}</span>
-//                                 <span className="show-detail"><IoLanguage className="icon"/> {showDetails.language}</span>
-//                                 <span className="show-detail"><IoTicket className="icon" /> {location.state.seats}</span>
-//                                 <span className="show-detail"><IoPricetags className="icon" /> Rs. {showDetails.unit_price}</span>
-//                             </div>
-//                             <div className="qr-code">
-//                                 <QRCode value={location.state.reference_number} />
-//                             </div>
-//                         </div>
-//                     )}
-//                 </div>
-//                 <div className="right-section">
-//                     <div className="pricing-card">
-//                         <h3>Pricing</h3>
-//                         <p>Total Price: Rs. {location.state.price_before_coupon}</p>
-//                         {location.state.couponCode && (
-//                             <div>
-//                                 <p>Coupon Applied: {location.state.couponCode}</p>
-//                                 <p>Final Price: Rs. {location.state.final_amount}</p>
-//                             </div>
-//                         )}
-//                     </div>
-//                 </div>
-//             </div>
-//         </React.Fragment>
-//     );
-// };
-
-// export default ConfirmationPage;
-
-
-// 
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../../common/header/Header';
 import axios from 'axios';
 import { FaMapMarkerAlt, FaClock, FaTheaterMasks } from 'react-icons/fa'; 
 import { IoTicket, IoPricetags, IoLanguage } from "react-icons/io5";
-import QRCode from 'qrcode.react'; // Import QRCode
+import QRCode from 'qrcode.react'; 
 
 import './Confirmation.css';
 
