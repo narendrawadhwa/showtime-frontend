@@ -21,7 +21,7 @@ const Controller = () => {
             <div className="main-container">
                 <Routes>
                     <Route 
-                        path="https://showtime-frontend-vltk.onrender.com/"   
+                        path="/"   
                         element={<Home baseUrl={baseUrl} />} 
                     />
                     <Route 
