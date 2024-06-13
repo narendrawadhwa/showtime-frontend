@@ -1,7 +1,7 @@
 {
   "name": "movies-app",
   "version": "0.1.0",
-  "homepage": "https://showtime-frontend-f3eewo3bo-narendrawadhwas-projects.vercel.app/",
+  "homepage": "https://showtime-frontend-narendrawadhwas-projects.vercel.app/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
