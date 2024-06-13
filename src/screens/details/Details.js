@@ -116,9 +116,7 @@ const Details = ({ onSelectMovie, baseUrl }) => {
                                 <Typography>
                                     <span className="ratings">Your Rating </span>
                                 </Typography>
-                                <div>
-
-
+                                <div style={{display:'flex'}} className='star-box'>
                                     {starStyles.map((style, index) => (
                                         <TiStarFullOutline
                                             className={style === "filled" ? "filled-star" : "empty-star"}
@@ -152,9 +150,7 @@ const Details = ({ onSelectMovie, baseUrl }) => {
                             <Typography>
                                 <span className="ratings">Your Rating </span>
                             </Typography>
-                            <div>
-
-
+                            <div className='star-box'>
                                 {starStyles.map((style, index) => (
                                     <TiStarFullOutline
                                         className={style === "filled" ? "filled-star" : "empty-star"}

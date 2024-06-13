@@ -129,6 +129,10 @@ iframe {
   margin-right: 7px;
 }
 
+.star-box{
+  display: flex;
+}
+
 .rate-movie{
   display: flex;
   flex-direction:row;
