@@ -20,17 +20,17 @@ const Controller = () => {
         <Router>
             <div className="main-container">
                 <Routes>
-                    <Route 
-                        path="/"   
-                        element={<Home baseUrl={baseUrl} />} 
+                    <Route
+                        path="/"
+                        element={<Home baseUrl={baseUrl} />}
                     />
-                    <Route 
-                        path="/movie/:id" 
-                        element={<Details onSelectMovie={handleSelectMovie} baseUrl={baseUrl} />} 
+                    <Route
+                        path="/movie/:id"
+                        element={<Details onSelectMovie={handleSelectMovie} baseUrl={baseUrl} />}
                     />
                     <Route
                         path="/bookshow/:id"
-                        element={<BookShow selectedMovieId={selectedMovieId} baseUrl={baseUrl} />} 
+                        element={<BookShow selectedMovieId={selectedMovieId} baseUrl={baseUrl} />}
                     />
                     <Route
                         path="/confirm/:id"

@@ -299,7 +299,7 @@ const BookShow = ({ baseUrl }) => {
             .then(response => {
                 const { reference_number, movie_name, show_time, price_before_coupon, price_after_coupon, final_amount, seats } = response.data;
 
-            navigate(`https://showtime-frontend-vltk.onrender.com/confirm/${id}`, {
+            navigate(`/confirm/${id}`, {
                 state: {
                     reference_number: reference_number,
                     movie_name: movie_name,

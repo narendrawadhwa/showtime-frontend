@@ -84,9 +84,9 @@ const Home = ({ classes }) => {
 
         fetchData();
     }, []);
-    
+
     const movieClickHandler = (id) => {
-        navigate('/movie/' + id); 
+        navigate('/movie/' + id);
     };
 
     const filterApplyHandler = async () => {
@@ -106,7 +106,7 @@ const Home = ({ classes }) => {
         if (releaseDateEnd !== "") {
             queryString += "&releaseDateEnd=" + releaseDateEnd;
         }
-    
+
         try {
             const res = await axios.get(`http://localhost:8085/api/movies${encodeURI(queryString)}`);
             setReleasedMovies(res.data.movies);
@@ -114,7 +114,7 @@ const Home = ({ classes }) => {
             console.error('Error filtering movies:', error);
         }
     };
-    
+
 
     return (
         <div>
@@ -180,39 +180,24 @@ const Home = ({ classes }) => {
                             </FormControl>
 
                             <FormControl className={classes.formControl}>
-                                {/* <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel> */}
-                                {/* <Select
-                                    multiple
-                                    input={<Input id="select-multiple-checkbox" />}
-                                    renderValue={selected => selected.join(',')}
-                                    value={artists}
-                                    onChange={(e) => setArtists(e.target.value)}
-                                >
-                                    {artistsList.map(artist => (
-                                        <MenuItem key={artist.artistid} value={artist.first_name}>
-    <Checkbox checked={artists.indexOf(artist.first_name) > -1} />
-    <ListItemText primary={artist.first_name + " " + artist.last_name} />
-</MenuItem>
 
-                                    ))}
-                                </Select> */}
                                 <FormControl className={classes.formControl}>
-    <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
-    <Select
-        multiple
-        input={<Input id="select-multiple-checkbox" />}
-        renderValue={selected => selected.join(',')}
-        value={artists}
-        onChange={(e) => setArtists(e.target.value)}
-    >
-        {artistsList.map(artist => (
-            <MenuItem key={artist.artistid} value={`${artist.first_name} ${artist.last_name}`}>
-                <Checkbox checked={artists.indexOf(`${artist.first_name} ${artist.last_name}`) > -1} />
-                <ListItemText primary={`${artist.first_name} ${artist.last_name}`} />
-            </MenuItem>
-        ))}
-    </Select>
-</FormControl>
+                                    <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                                    <Select
+                                        multiple
+                                        input={<Input id="select-multiple-checkbox" />}
+                                        renderValue={selected => selected.join(',')}
+                                        value={artists}
+                                        onChange={(e) => setArtists(e.target.value)}
+                                    >
+                                        {artistsList.map(artist => (
+                                            <MenuItem key={artist.artistid} value={`${artist.first_name} ${artist.last_name}`}>
+                                                <Checkbox checked={artists.indexOf(`${artist.first_name} ${artist.last_name}`) > -1} />
+                                                <ListItemText primary={`${artist.first_name} ${artist.last_name}`} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
 
                             </FormControl>
 
