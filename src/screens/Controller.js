@@ -9,7 +9,7 @@ import './Container.css';
 
 
 const Controller = () => {
-    const baseUrl = "http://localhost:8085/api/";
+    const baseUrl = "https://backend-project-ruddy.vercel.app/";
     const [selectedMovieId, setSelectedMovieId] = useState(null);
 
     const handleSelectMovie = (movieId) => {

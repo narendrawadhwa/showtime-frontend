@@ -44,9 +44,22 @@ const ConfirmationPage = ({ baseUrl }) => {
             <div className="confirmation-page">
                 <div className="left-section">
                     {movieDetails && <img src={movieDetails.poster_url} alt="Movie Poster" className="movie-poster" />}
-                </div>
-                <div className="middle-section">
                     {movieDetails && showDetails && (
+                        <div className="details-card">
+                            <h2>{movieDetails.title}</h2>
+                            <div className="show-details">
+                                <span className="show-detail"><FaTheaterMasks className="icon" /> {showDetails.theatre.name}</span>  <div class="divider"></div>
+                                <span className="show-detail"><FaMapMarkerAlt className="icon"/> {showDetails.theatre.city}</span><div class="divider"></div>
+                                <span className="show-detail"><FaClock className="icon"/> {showDetails.show_timing}</span> <div class="divider"></div>
+                                <span className="show-detail"><IoLanguage className="icon"/> {showDetails.language}</span> <div class="divider"></div>
+                                <span className="show-detail"><IoTicket className="icon" /> {location.state.seats}</span><div class="divider"></div>
+                                <span className="show-detail"><IoPricetags className="icon" /> Rs. {showDetails.unit_price}</span><div class="divider"></div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                {/* <div className="middle-section"> */}
+                    {/* {movieDetails && showDetails && (
                         <div className="details-card">
                             <h2>{movieDetails.title}</h2>
                             <div className="show-details">
@@ -57,13 +70,17 @@ const ConfirmationPage = ({ baseUrl }) => {
                                 <span className="show-detail"><IoTicket className="icon" /> {location.state.seats}</span>
                                 <span className="show-detail"><IoPricetags className="icon" /> Rs. {showDetails.unit_price}</span>
                             </div>
-                            <div className="qr-code">
-                                <QRCode value={location.state.reference_number} />
-                            </div>
                         </div>
-                    )}
-                </div>
+                    )} */}
+                {/* </div> */}
                 <div className="right-section">
+                <div className="qr-code">
+                                <QRCode value={location.state.reference_number} className='qr' />
+                                <p className='ref'>Ref No. {location.state.reference_number}</p>
+                            </div>
+                            <hr />
+                            <div class="vertical-line"></div>
+
                     <div className="pricing-card">
                         <h3>Pricing</h3>
                         {showDetails && (

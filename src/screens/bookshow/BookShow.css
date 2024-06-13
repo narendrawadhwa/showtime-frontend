@@ -1,6 +1,7 @@
 .bookShow {
     text-align: center;
     margin-top: 16px;
+    background-color: white;
 }
 
 .back {
@@ -8,6 +9,7 @@
     display: flex !important;
     justify-content: flex-start;
     padding: 5px 10px;
+    margin: 20px 0px;
 }
 
 .cardStyle {
@@ -56,7 +58,7 @@
 }
 
 .apply-btn {
-    margin-left: 10px; /* Adjust as needed */
+    margin-left: 10px;
 }
 
 .coupon-more-details{

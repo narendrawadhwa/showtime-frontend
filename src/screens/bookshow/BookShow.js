@@ -344,7 +344,7 @@ const BookShow = ({ baseUrl }) => {
     return (
         <div>
             <Header />
-            <div className="bookShow bg-black">
+            <div className="bookShow">
                 <Typography className="back">
                     <Link to={`/movie/${id}`}>&#60; Back to Movie Details</Link>
                 </Typography>
