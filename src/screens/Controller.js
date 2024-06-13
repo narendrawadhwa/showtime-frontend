@@ -25,15 +25,15 @@ const Controller = () => {
                         element={<Home baseUrl={baseUrl} />} 
                     />
                     <Route 
-                        path="https://showtime-frontend-vltk.onrender.com/movie/:id" 
+                        path="/movie/:id" 
                         element={<Details onSelectMovie={handleSelectMovie} baseUrl={baseUrl} />} 
                     />
                     <Route
-                        path="https://showtime-frontend-vltk.onrender.com/bookshow/:id"
+                        path="/bookshow/:id"
                         element={<BookShow selectedMovieId={selectedMovieId} baseUrl={baseUrl} />} 
                     />
                     <Route
-                        path="https://showtime-frontend-vltk.onrender.com/confirm/:id"
+                        path="/confirm/:id"
                         element={<Confirmation baseUrl={baseUrl} />}
                     />
                 </Routes>
