@@ -78,13 +78,16 @@ import 'tailwindcss/tailwind.css';
 const durationHours = Math.round(movie.duration / 60);
     
     
-    
+const handlePlayerReady = (event) => {
+    console.log('YouTube player is ready!');
+    event.target.playVideo(); 
+  };
 
     const opts = {
         height: '420',
         width: '700',
         playerVars: {
-            autoplay: 1
+            autoplay: 0
         }
     };
 
@@ -93,11 +96,7 @@ const durationHours = Math.round(movie.duration / 60);
     return (
         <div className="details">
             <Header id={params.id} baseUrl={baseUrl} showBookShowButton="true" />
-            {/* <div className="back my-0 py-4">
-                <Typography>
-                    <Link to="/"> &#60; Back to Home</Link>
-                </Typography>
-            </div> */}
+            
             <div className='details-content'>
             <div className="col-one">
             <div style={{marginBottom:'10px'}}>
@@ -193,59 +192,12 @@ const durationHours = Math.round(movie.duration / 60);
                         <YouTube
                             videoId={movie.trailer_url.split("?v=")[1]}
                             opts={opts}
-                            onReady={this._onReady}
+                            onReady={handlePlayerReady}
                             style={{height:'420px'}}
                         />
                     </div>
 
-                    {/* <div className="paddingRight right-top"> */}
-                        
-                        {/* <div>
-    <Typography>
-        {movie.genres.map((genre, index) => (
-            <span key={index} className="genreTag">{genre}</span>
-        ))}
-    </Typography>
-</div> */}
-{/* <GridList cellHeight={160} cols={2}>
-                            {movie.artists != null && movie.artists.map(artist => (
-                                <GridListTile
-                                    className="gridTile artistColumn"
-                                    onClick={() => artistClickHandler(artist.wiki_url)}
-                                    key={artist.id}>
-                                    <img src={artist.profile_url} alt={`${artist.first_name} ${artist.last_name}`} className='artist-img' />
-                                    <GridListTileBar
-                                        title={`${artist.first_name} ${artist.last_name}`}
-                                    />
-                                </GridListTile>
-                            ))}
-                        </GridList> */}
-
-                        {/* <div>
-                        <div>
-    {movie.artists != null && movie.artists.map(artist => (
-        <div key={artist.id} className="artist-container">
-            <img src={artist.profile_url} alt={`${artist.first_name} ${artist.last_name}`} className='artist-img' />
-            <p className='artist-name'>{artist.first_name} {artist.last_name}</p>
-        </div>
-    ))}
-</div>
-
-                        </div> */}
-
-
-
-                    {/* </div> */}
-
-{/* <div className="paddingRight right-top">
-    {movie.artists != null && movie.artists.map(artist => (
-        <div key={artist.id} className="artistColumn">
-            <img src={artist.profile_url} alt={`${artist.first_name} ${artist.last_name}`} />
-            <div>{`${artist.first_name} ${artist.last_name}`}</div>
-        </div>
-    ))}
-</div> */}
-
+                  
             </div>
             <div className='bottom'>
     
