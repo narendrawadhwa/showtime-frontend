@@ -7,9 +7,8 @@ import Confirmation from '../screens/confirmation/Confirmation';
 import 'tailwindcss/tailwind.css';
 import './Container.css';
 
-
 const Controller = () => {
-    const baseUrl = "https://backend-project-amvf.onrender.com";
+    const baseUrl = "https://backend-project-amvf.onrender.com/";
     const [selectedMovieId, setSelectedMovieId] = useState(null);
 
     const handleSelectMovie = (movieId) => {
