@@ -9,7 +9,7 @@ import './Container.css';
 
 
 const Controller = () => {
-    const baseUrl = "https://backend-project-ruddy.vercel.app/";
+    const baseUrl = "https://backend-project-amvf.onrender.com";
     const [selectedMovieId, setSelectedMovieId] = useState(null);
 
     const handleSelectMovie = (movieId) => {

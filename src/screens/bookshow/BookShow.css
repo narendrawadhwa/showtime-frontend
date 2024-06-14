@@ -39,7 +39,6 @@
     color: red;
 }
 
-/* CSS code for coupon container layout */
 .coupon-container {
     display: flex;
     justify-content: space-between;

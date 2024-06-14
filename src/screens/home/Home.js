@@ -51,7 +51,7 @@ const styles = theme => ({
     }
 });
 
-const Home = ({ classes }) => {
+const Home = ({ baseUrl }) => {
     const navigate = useNavigate();
     const [movieName, setMovieName] = useState("");
     const [upcomingMovies, setUpcomingMovies] = useState([]);
@@ -67,10 +67,10 @@ const Home = ({ classes }) => {
         const fetchData = async () => {
             try {
                 const [upcomingRes, releasedRes, genresRes, artistsRes] = await Promise.all([
-                    axios.get(`http://localhost:8085/api/movies?status=PUBLISHED`),
-                    axios.get(`http://localhost:8085/api/movies?status=RELEASED`),
-                    axios.get(`http://localhost:8085/api/genres`),
-                    axios.get(`http://localhost:8085/api/artists`)
+                    axios.get(`${baseUrl}movies?status=PUBLISHED`),
+                    axios.get(`${baseUrl}movies?status=RELEASED`),
+                    axios.get(`${baseUrl}api/genres`),
+                    axios.get(`${baseUrl}api/artists`)
                 ]);
 
                 setUpcomingMovies(upcomingRes.data.movies);
@@ -108,7 +108,7 @@ const Home = ({ classes }) => {
         }
 
         try {
-            const res = await axios.get(`http://localhost:8085/api/movies${encodeURI(queryString)}`);
+            const res = await axios.get(`baseUrl${encodeURI(queryString)}`);
             setReleasedMovies(res.data.movies);
         } catch (error) {
             console.error('Error filtering movies:', error);
