@@ -1,39 +1,10 @@
-/* //     root: {
-    //         flexGrow: 1,
-    //         backgroundColor: theme.palette.background.paper
-    //     },
-    //     upcomingMoviesHeading: {
-    //         textAlign: 'center',
-    //         background: '#ff9999',
-    //         padding: '8px',
-    //         fontSize: '1rem'
-    //     },
-    //     gridListUpcomingMovies: {
-    //         flexWrap: 'nowrap',
-    //         transform: 'translateZ(0)',
-    //         width: '100%'
-    //     },
-    //     gridListMain: {
-    //         transform: 'translateZ(0)',
-    //         cursor: 'pointer'
-    //     },
-    //     formControl: {
-    //         margin: theme.spacing.unit,
-    //         minWidth: 240,
-    //         maxWidth: 240
-    //     },
-    //     title: {
-    //         color: theme.palette.primary.light,
-    //     }
-    //
-   */
-
-   .upcomingMoviesHeading {
+.upcomingMoviesHeading {
     text-align: center;
     background: #ff9999;
     padding: 8px;
     font-size: 1rem;
-} 
+}
+
 .gridListUpcomingMovies {
     flex-wrap: nowrap;
     transform: translateZ(0);
@@ -57,7 +28,7 @@
     color: #1976d2 !important;
 }
 
-.find-movie-form{
+.find-movie-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -65,10 +36,11 @@
 }
 
 
-.filter{
-    background:#3f3e3e !important;
+.filter {
+    background: #3f3e3e !important;
     color: white !important;
 }
+
 ::-webkit-scrollbar {
     width: 4px;
 }
@@ -106,7 +78,7 @@
 }
 
 .right {
-        display: flex;
+    display: flex;
 
 }
 
@@ -118,16 +90,20 @@
     .flex-container {
         flex-direction: column;
     }
+
     .left {
         width: 100%;
     }
+
     .right {
         width: 90%;
     }
+
     .released-movie-grid-item {
         margin: 8px;
     }
-    .find-movie-form{
+
+    .find-movie-form {
         flex-direction: row;
         flex-wrap: wrap;
     }
