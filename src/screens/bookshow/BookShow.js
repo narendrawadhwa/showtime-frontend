@@ -65,7 +65,7 @@ const BookShow = ({ baseUrl }) => {
     useEffect(() => {
         const fetchCouponCodes = async () => {
             try {
-                const response = await axios.get(`${baseUrl}user/coupons`, {
+                const response = await axios.get(`${baseUrl}api/user/coupons`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -84,7 +84,7 @@ const BookShow = ({ baseUrl }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${baseUrl}movies/${id}`);
+                const response = await axios.get(`${baseUrl}api/movies/${id}`);
                 console.log("Response Data",response.data)
                 const originalShows = response.data.shows;
                 const newLocations = [...new Set(originalShows.map(show => show.theatre.city))];
@@ -105,7 +105,7 @@ const BookShow = ({ baseUrl }) => {
     useEffect(() => {
         const fetchCouponCodes = async () => {
             try {
-                const response = await axios.get(`${baseUrl}auth/coupons`, {
+                const response = await axios.get(`${baseUrl}api/auth/coupons`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

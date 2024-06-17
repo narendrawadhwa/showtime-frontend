@@ -68,8 +68,8 @@ const Home = ({ baseUrl }) => {
                 const [upcomingRes, releasedRes, genresRes, artistsRes] = await Promise.all([
                     axios.get(`${baseUrl}api/movies?status=PUBLISHED`),
                     axios.get(`${baseUrl}api/movies?status=RELEASED`),
-                    axios.get(`${baseUrl}api/genres`),
-                    axios.get(`${baseUrl}api/artists`)
+                    axios.get(`${baseUrl}genres`),
+                    axios.get(`${baseUrl}artists`)
                 ]);
                 setUpcomingMovies(upcomingRes.data.movies);
                 setReleasedMovies(releasedRes.data.movies);
