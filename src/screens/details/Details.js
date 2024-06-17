@@ -36,7 +36,7 @@ const Details = ({ onSelectMovie, baseUrl }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${baseUrl}movies/${params.id}`);
+                const response = await axios.get(`${baseUrl}api/movies/${params.id}`);
                 const fetchedMovie = response.data;
                 setMovie(fetchedMovie);
                 onSelectMovie(fetchedMovie._id);
