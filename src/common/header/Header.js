@@ -73,7 +73,7 @@ const clearAuthToken = () => {
     localStorage.removeItem('authTokenExpiration');
 };
 
-const Header = ({baseUrl}) => {
+const Header = ({baseUrl, showBookShowButton, id}) => {
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [value, setValue] = useState(0);
@@ -157,7 +157,6 @@ const Header = ({baseUrl}) => {
     const tabChangeHandler = (event, newValue) => {
         setValue(newValue);
     };
-
     const loginClickHandler = () => {
         const { username, loginPassword } = formState;
     
@@ -289,7 +288,7 @@ const Header = ({baseUrl}) => {
                             </Button>
                         </div>
                     }
-                    {props.showBookShowButton === "true" && !loggedIn
+                    {showBookShowButton === "true" && !loggedIn
                         ? <div className="bookshow-button">
                             <Button variant="contained" color="primary" className='bookshow' onClick={openModalHandler}>
                                 Book Show
@@ -298,9 +297,9 @@ const Header = ({baseUrl}) => {
                         : ""
                     }
 
-                    {props.showBookShowButton === "true" && loggedIn
+                    {showBookShowButton === "true" && loggedIn
                         ? <div className="bookshow-button">
-                            <Link to={"/bookshow/" + props.id}>
+                            <Link to={"/bookshow/" + id}>
                                 <Button variant="contained" color="primary" className='bookshow'>
                                     Book Show
                                 </Button>
