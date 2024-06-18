@@ -165,7 +165,7 @@ const Header = ({baseUrl, showBookShowButton, id}) => {
             return;
         }
     
-        axios.post(`${baseUrl}/api/auth/login`, { username, password: loginPassword })
+        axios.post(`${baseUrl}api/auth/login`, { username, password: loginPassword })
             .then(response => {
                 if (response.data.token && response.data.expiresIn) {
                     const { token, expiresIn } = response.data;
