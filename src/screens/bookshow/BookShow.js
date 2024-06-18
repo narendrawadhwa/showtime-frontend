@@ -343,7 +343,7 @@ const BookShow = ({ baseUrl }) => {
 
     return (
         <div>
-            <Header />
+            <Header baseUrl={baseUrl} />
             <div className="bookShow">
                 <Typography className="back">
                     <Link to={`/movie/${id}`}>&#60; Back to Movie Details</Link>

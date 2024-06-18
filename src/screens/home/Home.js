@@ -115,7 +115,7 @@ const Home = ({ baseUrl }) => {
 
     return (
         <div>
-            <Header />
+            <Header baseUrl={baseUrl} />
             <div className="upcomingMoviesHeading">
                 <span>Upcoming Movies</span>
             </div>

@@ -73,7 +73,7 @@ const clearAuthToken = () => {
     localStorage.removeItem('authTokenExpiration');
 };
 
-const Header = (props) => {
+const Header = ({baseUrl}) => {
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [value, setValue] = useState(0);

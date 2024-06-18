@@ -40,7 +40,7 @@ const ConfirmationPage = ({ baseUrl }) => {
 
     return (
         <React.Fragment>
-            <Header />
+            <Header baseUrl={baseUrl} />
             <div className="confirmation-page">
                 <div className="left-section">
                     {movieDetails && <img src={movieDetails.poster_url} alt="Movie Poster" className="movie-poster" />}

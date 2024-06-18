@@ -96,6 +96,7 @@ const Details = ({ onSelectMovie, baseUrl }) => {
     return (
         <div className="details">
             <Header id={params.id} baseUrl={baseUrl} showBookShowButton="true" />
+            
 
             <div className='details-content'>
                 <div className="col-one">
