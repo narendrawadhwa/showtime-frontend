@@ -19,6 +19,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../common/Loading/Loading';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const styles = theme => ({
     root: {
@@ -61,25 +64,34 @@ const Home = ({ baseUrl }) => {
     const [artistsList, setArtistsList] = useState([]);
     const [releaseDateStart, setReleaseDateStart] = useState("");
     const [releaseDateEnd, setReleaseDateEnd] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [alert, setAlert] = useState({ open: false, message: "", severity: "" });
 
+    const handleClose = () => {
+        setAlert({ open: false, message: "", severity: "" });
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [upcomingRes, releasedRes, genresRes, artistsRes] = await Promise.all([
-                    axios.get(`${baseUrl}api/movies?status=PUBLISHED`),
-                    axios.get(`${baseUrl}api/movies?status=RELEASED`),
-                    axios.get(`${baseUrl}api/genres`),
-                    axios.get(`${baseUrl}api/artists`)
+                    axios.get(`${baseUrl}movies?status=PUBLISHED`),
+                    axios.get(`${baseUrl}movies?status=RELEASED`),
+                    axios.get(`${baseUrl}genres`),
+                    axios.get(`${baseUrl}artists`)
                 ]);
                 setUpcomingMovies(upcomingRes.data.movies);
                 setReleasedMovies(releasedRes.data.movies);
                 setGenresList(genresRes.data.genres);
                 setArtistsList(artistsRes.data.artists);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 1000);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setAlert('Something went wrong. Please try again later.');
             }
         };
-                fetchData();
+        fetchData();
 
     }, []);
 
@@ -104,26 +116,30 @@ const Home = ({ baseUrl }) => {
             queryString += "&releaseDateEnd=" + releaseDateEnd;
         }
 
-        
         try {
-            const res = await axios.get(`${baseUrl}api/movies${encodeURI(queryString)}`);
+            const res = await axios.get(`${baseUrl}movies${encodeURI(queryString)}`);
             setReleasedMovies(res.data.movies);
         } catch (error) {
             console.error('Error filtering movies:', error);
+            setAlert('Something went wrong. Please try again later.', 'error');
         }
     };
 
     return (
         <div>
             <Header baseUrl={baseUrl} />
-            <div className="upcomingMoviesHeading">
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                <div className="upcomingMoviesHeading">
                 <span>Upcoming Movies</span>
             </div>
 
             <GridList cols={5} className="gridListUpcomingMovies" >
                 {upcomingMovies.map(movie => (
                     <GridListTile key={"upcoming" + movie._id}>
-                        <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
+                        <img src={movie.poster_url} className="movie-poster-home" alt={movie.title} />
                         <GridListTileBar title={movie.title} />
                     </GridListTile>
                 ))}
@@ -134,7 +150,7 @@ const Home = ({ baseUrl }) => {
                     <GridList cellHeight={350} cols={4} className="gridListMain">
                         {releasedMovies.map(movie => (
                             <GridListTile onClick={() => movieClickHandler(movie.movieid)} className="released-movie-grid-item" key={"grid" + movie._id}>
-                                <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
+                                <img src={movie.poster_url} className="movie-poster-home" alt={movie.title} />
                                 <GridListTileBar
                                     title={movie.title}
                                     subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
@@ -144,14 +160,14 @@ const Home = ({ baseUrl }) => {
                     </GridList>
                 </div>
                 <div className="right">
-                    <Card style={{padding:'20px'}}>
-                    <FormControl className="formControl">
-                                <Typography className="find-movie-title" color="textSecondary">
-                                    FIND MOVIES BY:
-                                </Typography>
-                            </FormControl>
+                    <Card style={{ padding: '20px' }}>
+                        <FormControl className="formControl">
+                            <Typography className="find-movie-title" color="textSecondary">
+                                FIND MOVIES BY:
+                            </Typography>
+                        </FormControl>
                         <CardContent className='find-movie-form'>
-                                                 <FormControl className="formControl">
+                            <FormControl className="formControl">
                                 <InputLabel htmlFor="movieName">Movie Name</InputLabel>
                                 <Input id="movieName" onChange={(e) => setMovieName(e.target.value)} />
                             </FormControl>
@@ -174,23 +190,23 @@ const Home = ({ baseUrl }) => {
                             </FormControl>
                             <FormControl className="formControl">
 
-                            <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
-    <Select
-        multiple
-        input={<Input id="select-multiple-checkbox" />}
-        renderValue={selected => selected.join(',')}
-        value={artists}
-        onChange={(e) => setArtists(e.target.value)}
-    >
-        {artistsList.map(artist => (
-            <MenuItem key={artist.artistid} value={`${artist.first_name} ${artist.last_name}`}>
-                <Checkbox checked={artists.indexOf(`${artist.first_name} ${artist.last_name}`) > -1} />
-                <ListItemText primary={`${artist.first_name} ${artist.last_name}`} />
-            </MenuItem>
-        ))}
-    </Select>
-</FormControl>
-<FormControl className="formControl">
+                                <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                                <Select
+                                    multiple
+                                    input={<Input id="select-multiple-checkbox" />}
+                                    renderValue={selected => selected.join(',')}
+                                    value={artists}
+                                    onChange={(e) => setArtists(e.target.value)}
+                                >
+                                    {artistsList.map(artist => (
+                                        <MenuItem key={artist.artistid} value={`${artist.first_name} ${artist.last_name}`}>
+                                            <Checkbox checked={artists.indexOf(`${artist.first_name} ${artist.last_name}`) > -1} />
+                                            <ListItemText primary={`${artist.first_name} ${artist.last_name}`} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl className="formControl">
                                 <TextField
                                     id="releaseDateStart"
                                     label="Release Date Start"
@@ -218,7 +234,23 @@ const Home = ({ baseUrl }) => {
                             </FormControl>
                         </CardContent>
                     </Card>
-                </div> </div>
+                </div>
+            </div>
+            <Snackbar
+                open={alert.open}
+                autoHideDuration={ 6000 }
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                }}
+            >
+                <MuiAlert onClose={handleClose} severity={alert.severity} sx={{ width: '100%' }}>
+                    {alert.message}
+                </MuiAlert>
+            </Snackbar>
+            </>
+            )}
         </div>
     );
 };

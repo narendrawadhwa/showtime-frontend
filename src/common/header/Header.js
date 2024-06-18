@@ -165,7 +165,7 @@ const Header = ({baseUrl, showBookShowButton, id}) => {
             return;
         }
     
-        axios.post(`${baseUrl}api/auth/login`, { username, password: loginPassword })
+        axios.post(`${baseUrl}auth/login`, { username, password: loginPassword })
             .then(response => {
                 if (response.data.token && response.data.expiresIn) {
                     const { token, expiresIn } = response.data;
@@ -212,7 +212,7 @@ const Header = ({baseUrl, showBookShowButton, id}) => {
             return;
         }
 
-        axios.post(`${baseUrl}api/auth/signup`, { first_name: firstname, last_name: lastname, email_address: email, password: registerPassword, mobile_number: contact })
+        axios.post(`${baseUrl}auth/signup`, { first_name: firstname, last_name: lastname, email_address: email, password: registerPassword, mobile_number: contact })
             .then(response => {
                 setFormState(prevState => ({
                     ...prevState,

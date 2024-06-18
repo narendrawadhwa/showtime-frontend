@@ -15,15 +15,16 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Loading from '../../common/Loading/Loading';
 
 const BookShow = ({ baseUrl }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [couponCodes, setCouponCodes] = useState([]);
-    const [token, setToken] = useState(null); 
+    const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(true);
     const [state, setState] = useState({
-        
+
         location: "",
         theatre: "",
         language: "",
@@ -42,9 +43,9 @@ const BookShow = ({ baseUrl }) => {
         showDates: [],
         showTimes: [],
         originalShows: [],
-        movieId: '', 
-        selectedCoupon: null, 
-    finalPrice: 0 
+        movieId: '',
+        selectedCoupon: null,
+        finalPrice: 0
 
     });
 
@@ -63,29 +64,11 @@ const BookShow = ({ baseUrl }) => {
     }, []);
 
     useEffect(() => {
-        const fetchCouponCodes = async () => {
-            try {
-                const response = await axios.get(`${baseUrl}api/user/coupons`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                console.log("Coupon Codes:", response.data.coupons);
-                setCouponCodes(response.data.coupons);
-            } catch (error) {
-                console.error('Error fetching coupon codes:', error);
-            }
-        };
-        
-        fetchCouponCodes();
-    }, [baseUrl]);
-
-
-    useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get(`${baseUrl}api/movies/${id}`);
-                console.log("Response Data",response.data)
+                const response = await axios.get(`${baseUrl}movies/${id}`);
+                console.log("Response Data", response.data)
                 const originalShows = response.data.shows;
                 const newLocations = [...new Set(originalShows.map(show => show.theatre.city))];
                 setState(prevState => ({
@@ -96,7 +79,11 @@ const BookShow = ({ baseUrl }) => {
                 }));
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setAlert('Something went wrong. Please try again later.', 'error');
             }
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         };
 
         fetchData();
@@ -105,7 +92,7 @@ const BookShow = ({ baseUrl }) => {
     useEffect(() => {
         const fetchCouponCodes = async () => {
             try {
-                const response = await axios.get(`${baseUrl}api/auth/coupons`, {
+                const response = await axios.get(`${baseUrl}auth/coupons`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -200,25 +187,25 @@ const BookShow = ({ baseUrl }) => {
 
     const ticketsChangeHandler = (event) => {
         const selectedTickets = parseInt(event.target.value, 10);
-        
+
         setState(prevState => ({
             ...prevState,
             tickets: selectedTickets,
             reqTickets: isNaN(selectedTickets) || selectedTickets <= 0 ? "dispBlock" : "dispNone"
         }));
-    
+
         if (state.selectedCoupon) {
-            applyCouponHandler(state.selectedCoupon); 
-         }
+            applyCouponHandler(state.selectedCoupon);
+        }
     };
-    
-    
+
+
     const applyCouponHandler = (coupon) => {
         const totalPrice = state.unitPrice * state.tickets;
-    
+
         if (totalPrice < coupon.minTotalAmount) {
             console.error(`Coupon conditions not met: Total price (${totalPrice}) is less than the minimum required amount (${coupon.minTotalAmount})`);
-    
+
             setState(prevState => ({
                 ...prevState,
                 selectedCoupon: null,
@@ -226,13 +213,13 @@ const BookShow = ({ baseUrl }) => {
             }));
             return;
         }
-    
+
         const maxDiscount = (totalPrice * coupon.discount) / 100;
-    
+
         const finalDiscount = Math.min(maxDiscount, coupon.maxDiscountAmount);
-    
+
         const finalPrice = totalPrice - finalDiscount;
-    
+
         setState(prevState => ({
             ...prevState,
             selectedCoupon: coupon,
@@ -240,11 +227,11 @@ const BookShow = ({ baseUrl }) => {
         }));
 
     };
-    
-    
-    
-    
-    
+
+
+
+
+
 
     const bookShowButtonHandler = () => {
         console.log("Token:", token)
@@ -253,12 +240,12 @@ const BookShow = ({ baseUrl }) => {
             setAlert({ open: true, message: "Login first to access this page", severity: "warning" });
             setTimeout(() => {
                 navigate('/');
-            }, 4000);     
+            }, 4000);
             return;
-            
+
         }
         const { location, theatre, language, showDate, tickets, movieId } = state;
-    
+
         if (!location || !theatre || !language || !showDate || !tickets || tickets.length === 0) {
             setState(prevState => ({
                 ...prevState,
@@ -270,7 +257,7 @@ const BookShow = ({ baseUrl }) => {
             }));
             return;
         }
-    
+
 
         const selectedShow = state.originalShows.find(show => (
             show.theatre.city === location &&
@@ -278,12 +265,12 @@ const BookShow = ({ baseUrl }) => {
             show.language === language &&
             show.show_timing === showDate
         ));
-    
+
         if (selectedShow) {
             const { id: showId } = selectedShow;
 
             axios.post(
-                `${baseUrl}api/auth/book-show`,
+                `${baseUrl}auth/book-show`,
                 {
                     movieId: state.movieId,
                     showId: showId,
@@ -296,35 +283,35 @@ const BookShow = ({ baseUrl }) => {
                     }
                 }
             )
-            .then(response => {
-                const { reference_number, movie_name, show_time, price_before_coupon, price_after_coupon, final_amount, seats } = response.data;
+                .then(response => {
+                    const { reference_number, movie_name, show_time, price_before_coupon, price_after_coupon, final_amount } = response.data;
 
-            navigate(`/confirm/${id}`, {
-                state: {
-                    reference_number: reference_number,
-                    movie_name: movie_name,
-                    show_time: show_time,
-                    price_before_coupon: price_before_coupon,
-                    price_after_coupon: price_after_coupon,
-                    final_amount: final_amount,
-                    movieId: state.movieId,
-                    showId: showId,
-                    seats: state.tickets,
-                    couponCode: response.data.couponCode
-                    }
+                    navigate(`/confirm/${reference_number}`, {
+                        state: {
+                            reference_number: reference_number,
+                            movie_name: movie_name,
+                            show_time: show_time,
+                            price_before_coupon: price_before_coupon,
+                            price_after_coupon: price_after_coupon,
+                            final_amount: final_amount,
+                            movieId: state.movieId,
+                            showId: showId,
+                            seats: state.tickets,
+                            couponCode: response.data.couponCode
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error booking show:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error booking show:', error);
-            });
         } else {
             console.error('Selected show not found');
         }
     };
-    
+
     useEffect(() => {
         const totalPrice = state.unitPrice * state.tickets;
-            setState(prevState => ({
+        setState(prevState => ({
             ...prevState,
             totalPrice: totalPrice,
             totalPriceVisibility: totalPrice <= 0 ? "hidden" : "visible"
@@ -336,7 +323,7 @@ const BookShow = ({ baseUrl }) => {
         message: '',
         severity: 'success'
     });
-  
+
     const handleClose = () => {
         setAlert({ ...alert, open: false });
     };
@@ -349,7 +336,7 @@ const BookShow = ({ baseUrl }) => {
                     <Link to={`/movie/${id}`}>&#60; Back to Movie Details</Link>
                 </Typography>
 
-                <Card className="cardStyle" style={{padding:'5px 15px'}}>
+                <Card className="cardStyle" style={{ padding: '5px 15px' }}>
                     <CardContent>
                         <Typography variant="headline" component="h2">
                             BOOK SHOW
@@ -428,100 +415,97 @@ const BookShow = ({ baseUrl }) => {
                         <br /><br />
 
                         <FormControl required className="formControl">
-    <InputLabel htmlFor="tickets">Number of Tickets</InputLabel>
-    <Input
-        id="tickets"
-        type="number"
-        value={state.tickets !== 0 ? state.tickets : ""}
-        onChange={ticketsChangeHandler}
-    />
-    <FormHelperText className={state.reqTickets}>
-        <span className="red">Required</span>
-    </FormHelperText>
-</FormControl>
-
+                            <InputLabel htmlFor="tickets">Number of Tickets</InputLabel>
+                            <Input
+                                id="tickets"
+                                type="number"
+                                value={state.tickets !== 0 ? state.tickets : ""}
+                                onChange={ticketsChangeHandler}
+                            />
+                            <FormHelperText className={state.reqTickets}>
+                                <span className="red">Required</span>
+                            </FormHelperText>
+                        </FormControl>
                         <br /><br />
+                        <Typography style={{ display: state.tickets > 0 ? 'block' : 'none' }}>
+                            <Typography>
+                                Available Seats: {state.availableTickets}
+                            </Typography>
+                            <Typography>
+                                Unit Price: Rs. {state.unitPrice}
+                            </Typography>
+                            <br />
+                            {typeof state.totalPrice === 'number' && !isNaN(state.totalPrice) && state.totalPrice !== 0 && (
+                                <Typography>
+                                    Total Price: Rs. {state.totalPrice}
+                                </Typography>
+                            )}
+                            <br />
+                            <div>
+                                {couponCodes && couponCodes.length > 0 && (
+                                    <Typography>
+                                        Available Coupons:
+                                    </Typography>
+                                )}
+                                <div>
+                                    {couponCodes && couponCodes.map(coupon => (
+                                        <div key={coupon.code}>
+                                            <div className="coupon-container">
+                                                <div className="coupon-details">
+                                                    <Typography style={{ fontWeight: '600' }}>
+                                                        {coupon.code}
+                                                    </Typography >
+                                                    <span className='detail'>
+                                                        Min Value: Rs. {coupon.minTotalAmount}
+                                                    </span>
+                                                    <span className='detail'>
+                                                        Max Discount: Rs. {coupon.maxDiscountAmount} ({coupon.discount}% off)
+                                                    </span>
+                                                </div>
+                                                <div className="apply-btn">
+                                                    <Button
+                                                        variant="outlined"
+                                                        color="primary"
+                                                        disabled={state.selectedCoupon === coupon || state.totalPrice <= coupon.minTotalAmount}
+                                                        onClick={() => applyCouponHandler(coupon)}
+                                                    >
+                                                        Apply
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                {state.selectedCoupon ? (
+                                    <Typography>
+                                        Final Price after Coupon ({state.selectedCoupon.code}): Rs. {state.finalPrice}
+                                    </Typography>
+                                ) : null}
+                            </div>
+                        </Typography>
+                        <br />
 
-                     
-<Typography style={{ display: state.tickets > 0 ? 'block' : 'none' }}>
-<Typography>
-    Available Seats: {state.availableTickets}
-</Typography>
-                        <Typography>
-    Unit Price: Rs. {state.unitPrice}
-</Typography>
-<br />
-{typeof state.totalPrice === 'number' && !isNaN(state.totalPrice) && state.totalPrice !== 0 && (
-    <Typography>
-        Total Price: Rs. {state.totalPrice}
-    </Typography>
-)}
-    <br />
-    <div>
-    {couponCodes && couponCodes.length > 0 && (
-        <Typography>
-            Available Coupons:
-        </Typography>
-    )}
-    <div>
-        {couponCodes && couponCodes.map(coupon => (
-            <div key={coupon.code}>
-                <div className="coupon-container">
-                    <div className="coupon-details">
-                        <Typography style={{fontWeight:'600'}}>
-                            {coupon.code}
-                        </Typography >
-                        <span className='detail'>
-                            Min Value: Rs. {coupon.minTotalAmount}
-                        </span>
-                        <span className='detail'>
-                            Max Discount: Rs. {coupon.maxDiscountAmount} ({coupon.discount}% off)
-                        </span>
-                    </div>
-                    <div className="apply-btn">
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            disabled={state.selectedCoupon === coupon || state.totalPrice <= coupon.minTotalAmount}
-                            onClick={() => applyCouponHandler(coupon)}
+                        <Button variant="contained" onClick={bookShowButtonHandler} color="primary" style={{ width: '100%' }}
+                            disabled={state.tickets.length === 0 || state.tickets.length > state.availableSeats}
+
                         >
-                            Apply
+                            BOOK SHOW
                         </Button>
-                    </div>
-                </div>
-            </div>
-        ))}
-    </div>
-    {state.selectedCoupon ? (
-        <Typography>
-            Final Price after Coupon ({state.selectedCoupon.code}): Rs. {state.finalPrice}
-        </Typography>
-    ) : null}
-</div>
-</Typography>
-<br />
-
-<Button variant="contained" onClick={bookShowButtonHandler} color="primary"    style={{width:'100%'}}
-    disabled={state.tickets.length === 0 || state.tickets.length > state.availableSeats}
-
->
-    BOOK SHOW
-</Button>
                     </CardContent>
                 </Card>
-<Snackbar
-                open={alert.open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right'
-                }}
-            >
-                <MuiAlert onClose={handleClose} severity={alert.severity} sx={{ width: '100%' }}>
-                    {alert.message}
-                </MuiAlert>
-            </Snackbar>
+                <Snackbar
+                    open={alert.open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    }}
+                >
+                    <MuiAlert onClose={handleClose} severity={alert.severity} sx={{ width: '100%' }}>
+                        {alert.message}
+                    </MuiAlert>
+                </Snackbar>
             </div>
         </div>
     );

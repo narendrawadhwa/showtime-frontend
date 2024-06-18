@@ -8,12 +8,12 @@ import { LuDot } from "react-icons/lu";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
-
+import Loading from '../../common/Loading/Loading';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const Details = ({ onSelectMovie, baseUrl }) => {
-
     const totalStars = 5;
-
     const [movie, setMovie] = useState({
         _id: "",
         genres: [],
@@ -28,21 +28,28 @@ const Details = ({ onSelectMovie, baseUrl }) => {
         { id: 4, stateId: "star4", color: "black" },
         { id: 5, stateId: "star5", color: "black" }
     ]);
-
+    const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
     const [starStyles, setStarStyles] = useState(Array.from({ length: totalStars }, () => "empty"));
+    const [alert, setAlert] = useState({ open: false, message: "", severity: "" });
 
+    const handleClose = () => {
+        setAlert({ open: false, message: "", severity: "" });
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${baseUrl}api/movies/${params.id}`);
+                const response = await axios.get(`${baseUrl}movies/${params.id}`);
                 const fetchedMovie = response.data;
                 setMovie(fetchedMovie);
                 onSelectMovie(fetchedMovie._id);
-                console.log('Movie State:', fetchedMovie);
-            } catch (error) {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 2000);
+                } catch (error) {
                 console.error('Error fetching movie details:', error);
+                setAlert('Something went wrong. Please try again later.');
             }
         };
 
@@ -96,7 +103,9 @@ const Details = ({ onSelectMovie, baseUrl }) => {
     return (
         <div className="details">
             <Header id={params.id} baseUrl={baseUrl} showBookShowButton="true" />
-            
+            {isLoading ? (
+                <Loading />
+            ) : (
 
             <div className='details-content'>
                 <div className="col-one">
@@ -170,7 +179,7 @@ const Details = ({ onSelectMovie, baseUrl }) => {
 
                 <div className='top'>
                     <div className="left-top">
-                        <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
+                        <img src={movie.poster_url} className="movie-post" alt={movie.title} />
                     </div>
 
                     <div className="middle-top">
@@ -197,6 +206,20 @@ const Details = ({ onSelectMovie, baseUrl }) => {
                     </div>
                 </div>
             </div>
+             )}
+                             <Snackbar
+                    open={alert.open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    }}
+                >
+                    <MuiAlert onClose={handleClose} severity={alert.severity} sx={{ width: '100%' }}>
+                        {alert.message}
+                    </MuiAlert>
+                </Snackbar>
         </div>
     );
 };

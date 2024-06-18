@@ -3,6 +3,7 @@
     justify-content: space-between;
     background-color: #222;
     padding: 8px 32px 8px 16px;
+    z-index: 9999;
 }
 
 .login-button {

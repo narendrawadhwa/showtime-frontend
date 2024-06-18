@@ -8,7 +8,7 @@ import 'tailwindcss/tailwind.css';
 import './Container.css';
 
 const Controller = () => {
-    const baseUrl = "https://backend-project-amvf.onrender.com/";
+    const baseUrl = "https://backend-project-amvf.onrender.com/api/";
     const [selectedMovieId, setSelectedMovieId] = useState(null);
 
     const handleSelectMovie = (movieId) => {
