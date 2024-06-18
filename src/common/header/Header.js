@@ -114,9 +114,7 @@ const Header = (props) => {
                 window.addEventListener(event, checkTokenExpiration);
             });
         }
-        // else {
-        //     navigate('/');
-        // }
+
         return () => {
             const events = ['mousedown', 'keydown', 'mousemove', 'touchstart'];
             events.forEach(event => {
@@ -162,13 +160,13 @@ const Header = (props) => {
 
     const loginClickHandler = () => {
         const { username, loginPassword } = formState;
-
+    
         if (!username || !loginPassword) {
             setAlert({ open: true, message: "Please fill all required details.", severity: "warning" });
             return;
         }
-
-        axios.post("http://localhost:8085/api/auth/login", { username, password: loginPassword })
+    
+        axios.post(`${backendUrl}/api/auth/login`, { username, password: loginPassword })
             .then(response => {
                 if (response.data.token && response.data.expiresIn) {
                     const { token, expiresIn } = response.data;
@@ -185,14 +183,16 @@ const Header = (props) => {
             })
             .catch(error => {
                 console.error("Login error:", error);
-                if (error.response.status === 404) {
-                    console.log("User not found")
-                    setAlert({ open: true, message: "User not found. Please check your username.", severity: "warning" });
-                } else if (error.response.status === 401) {
-                    console.log("Invalid Credentials")
-                    setAlert({ open: true, message: "Incorrect password. Please try again.", severity: "error" });
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        setAlert({ open: true, message: "User not found. Please check your username.", severity: "warning" });
+                    } else if (error.response.status === 401) {
+                        setAlert({ open: true, message: "Incorrect password. Please try again.", severity: "error" });
+                    } else {
+                        setAlert({ open: true, message: "Error Occured!", severity: "error" });
+                    }
                 } else {
-                    setAlert({ open: true, message: "Error Occured!", severity: "error" });
+                    setAlert({ open: true, message: "Network error. Please check your connection.", severity: "error" });
                 }
             });
     };
@@ -213,7 +213,7 @@ const Header = (props) => {
             return;
         }
 
-        axios.post("http://localhost:8085/api/auth/signup", { first_name: firstname, last_name: lastname, email_address: email, password: registerPassword, mobile_number: contact })
+        axios.post(`${baseUrl}api/auth/signup`, { first_name: firstname, last_name: lastname, email_address: email, password: registerPassword, mobile_number: contact })
             .then(response => {
                 setFormState(prevState => ({
                     ...prevState,
@@ -228,16 +228,6 @@ const Header = (props) => {
             });
     };
 
-    // const logoutHandler = () => {
-    //     clearAuthToken();
-    //     localStorage.removeItem("loggedIn");
-    //     setLoggedIn(false);
-    //     setSessionExpired(false);
-    //     setAlert({ open: true, message: "Logged out successfully.", severity: "success" });
-    //     setTimeout(() => {
-    //         navigate('/');
-    //     }, 3000);    
-    // };
     const logoutHandler = () => {
         setAlert({ open: true, message: "Logged out successfully.", severity: "success" });
     
@@ -346,7 +336,7 @@ const Header = (props) => {
                             <InputLabel htmlFor="loginPassword">Password</InputLabel>
                             <Input
                                 id="loginPassword"
-                                type={showLoginPassword ? "text" : "password"} // Use showLoginPassword state to toggle type
+                                type={showLoginPassword ? "text" : "password"}
                                 loginpassword={formState.loginPassword}
                                 onChange={inputChangeHandler}
                                 endAdornment={
@@ -389,7 +379,7 @@ const Header = (props) => {
                             <InputLabel htmlFor="registerPassword">Password</InputLabel>
                             <Input
                                 id="registerPassword"
-                                type={showRegisterPassword ? "text" : "password"} // Use showRegisterPassword state to toggle type
+                                type={showRegisterPassword ? "text" : "password"} 
                                 registerPassword={formState.registerPassword}
                                 onChange={inputChangeHandler}
                                 endAdornment={

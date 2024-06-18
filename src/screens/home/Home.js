@@ -84,7 +84,7 @@ const Home = ({ baseUrl }) => {
     }, []);
 
     const movieClickHandler = (id) => {
-        navigate('/movie/' + id); // Use navigate instead of history.push
+        navigate('/movie/' + id);
     };
 
     const filterApplyHandler = async () => {

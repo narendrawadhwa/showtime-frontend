@@ -58,21 +58,7 @@ const ConfirmationPage = ({ baseUrl }) => {
                         </div>
                     )}
                 </div>
-                {/* <div className="middle-section"> */}
-                    {/* {movieDetails && showDetails && (
-                        <div className="details-card">
-                            <h2>{movieDetails.title}</h2>
-                            <div className="show-details">
-                                <span className="show-detail"><FaTheaterMasks className="icon" /> {showDetails.theatre.name}</span>
-                                <span className="show-detail"><FaMapMarkerAlt className="icon"/> {showDetails.theatre.city}</span>
-                                <span className="show-detail"><FaClock className="icon"/> {showDetails.show_timing}</span>
-                                <span className="show-detail"><IoLanguage className="icon"/> {showDetails.language}</span>
-                                <span className="show-detail"><IoTicket className="icon" /> {location.state.seats}</span>
-                                <span className="show-detail"><IoPricetags className="icon" /> Rs. {showDetails.unit_price}</span>
-                            </div>
-                        </div>
-                    )} */}
-                {/* </div> */}
+                
                 <div className="right-section">
                 <div className="qr-code">
                                 <QRCode value={location.state.reference_number} className='qr' />
