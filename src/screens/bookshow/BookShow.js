@@ -283,7 +283,7 @@ const BookShow = ({ baseUrl }) => {
             const { id: showId } = selectedShow;
 
             axios.post(
-                `${baseUrl}auth/book-show`,
+                `${baseUrl}api/auth/book-show`,
                 {
                     movieId: state.movieId,
                     showId: showId,
