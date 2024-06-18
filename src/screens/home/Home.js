@@ -100,6 +100,8 @@ const Home = ({ baseUrl }) => {
     };
 
     const filterApplyHandler = async () => {
+        let queryString = '?status=RELEASED'; 
+    
         if (movieName !== "") {
             queryString += "&title=" + movieName;
         }
@@ -115,16 +117,16 @@ const Home = ({ baseUrl }) => {
         if (releaseDateEnd !== "") {
             queryString += "&releaseDateEnd=" + releaseDateEnd;
         }
-
+    
         try {
             const res = await axios.get(`${baseUrl}movies${encodeURI(queryString)}`);
             setReleasedMovies(res.data.movies);
         } catch (error) {
             console.error('Error filtering movies:', error);
-            setAlert('Something went wrong. Please try again later.', 'error');
+            setAlert({ open: true, message: 'Something went wrong. Please try again later.', severity: 'error' });
         }
     };
-
+    
     return (
         <div>
             <Header baseUrl={baseUrl} />
@@ -136,15 +138,15 @@ const Home = ({ baseUrl }) => {
                 <span>Upcoming Movies</span>
             </div>
 
-            <GridList cols={5} className="gridListUpcomingMovies" >
+            <GridList cellHeight={300} cols={5} className="gridListUpcomingMovies" >
                 {upcomingMovies.map(movie => (
-                    <GridListTile key={"upcoming" + movie._id}>
+                    <GridListTile key={"upcoming" + movie._id} className="upcoming-movie-grid-item">
                         <img src={movie.poster_url} className="movie-poster-home" alt={movie.title} />
-                        <GridListTileBar title={movie.title} />
+                        <GridListTileBar title={movie.title} className='movie-title' style={{fontSize:'12px !important'}} />
                     </GridListTile>
                 ))}
             </GridList>
-
+            <hr className='divide'/>
             <div className="flex-container">
                 <div className="left">
                     <GridList cellHeight={350} cols={4} className="gridListMain">

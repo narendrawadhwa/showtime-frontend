@@ -6,14 +6,18 @@
 }
 
 .gridListUpcomingMovies {
-    flex-wrap: nowrap;
+    display: flex !important;
+    flex-wrap: wrap !important;
     transform: translateZ(0);
-    width: 100%;
+    width: 100% !important;
+    padding: 5px 12px !important;
 }
 
 .gridListMain {
     transform: translateZ(0);
     cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .formControl {
@@ -35,7 +39,11 @@
     padding: 0 !important;
 }
 
-
+.divide{
+    margin: 10px 10px 5px 10px;
+    height: 2px;
+    background-color: #969595;
+}
 .filter {
     background: #3f3e3e !important;
     color: white !important;
@@ -67,44 +75,83 @@
 .flex-container {
     display: flex;
     gap: 10px;
+    margin: 12px;
 }
 
-.flex-container>div {
-    margin: 16px;
-}
 
 .left {
     width: 76%;
+    display: flex;
+    gap: 10px;
 }
 
 .right {
     display: flex;
+    height: 100%;
 
 }
+.upcoming-movie-grid-item{
+    width: 20% !important;
+}
+
 
 .released-movie-grid-item {
-    margin: 15px;
+    width: calc(33.33% - 20px) !important;
+    margin: 10px; 
+    flex: 1 0 calc(33.33% - 20px);
+}
+@media (max-width: 992px) {
+
+    .left {
+        display: flex;
+    }
+
+    .right {
+        width: 35%;
+    }
+
+    .released-movie-grid-item {
+        width: calc(45% - 10px) !important;
+        margin: 8px; 
+        flex: 1 0 calc(45% - 10px);
+    }
+    .find-movie-form {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 }
 
-@media (max-width: 992px) {
-    .flex-container {
-        flex-direction: column;
+@media (max-width: 700px) {
+
+    .movie-title{
+        padding: 5px !important;
+    }
+
+    .flex-container{
+        flex-direction: column-reverse;
     }
 
     .left {
-        width: 100%;
+        display: flex;
+        width: 95%;
     }
 
     .right {
         width: 90%;
     }
 
-    .released-movie-grid-item {
-        margin: 8px;
+    .upcoming-movie-grid-item{
+        width: 32% !important
     }
-
+    
     .find-movie-form {
         flex-direction: row;
         flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 560px) {
+    .upcoming-movie-grid-item, .released-movie-grid-item{
+        height: 230px !important;
     }
 }
