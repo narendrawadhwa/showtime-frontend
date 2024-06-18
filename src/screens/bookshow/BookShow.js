@@ -51,7 +51,6 @@ const BookShow = ({ baseUrl }) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
-        console.log(storedToken)
         if (storedToken) {
             setToken(storedToken);
         } else {
